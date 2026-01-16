@@ -24,7 +24,7 @@ const PortfolioSection: React.FC = () => {
               className="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight font-serif uppercase"
             >
               Projetos <br /><span className="text-[#8a70c0]">Autorais</span>
-            </h2>
+            </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -37,10 +37,10 @@ const PortfolioSection: React.FC = () => {
           </div>
           
           <div className="flex flex-wrap gap-2">
-            {['Tudo', 'Residencial', 'Comercial', 'Público'].map((cat: any) => (
+            {['Tudo', 'Residencial', 'Comercial', 'Público'].map((cat) => (
               <button
                 key={cat}
-                onClick={() => setFilter(cat)}
+                onClick={() => setFilter(cat as any)}
                 className={`px-6 py-3 rounded-full text-[9px] font-bold uppercase tracking-wider transition-all duration-300 active:scale-95 ${
                   filter === cat 
                   ? 'bg-[#6b4a9a] text-white shadow-md' 
@@ -65,6 +65,7 @@ const PortfolioSection: React.FC = () => {
             >
               <img 
                 src={project.imageUrl} 
+                alt={project.title}
                 className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#08080c] via-transparent to-transparent opacity-80" />
@@ -82,7 +83,6 @@ const PortfolioSection: React.FC = () => {
         </div>
       </div>
       
-      {/* Modal update to match refined aesthetic */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div 
@@ -93,6 +93,9 @@ const PortfolioSection: React.FC = () => {
             onClick={() => setSelectedProject(null)}
           >
             <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               className="bg-[#111119] rounded-[2.5rem] overflow-hidden max-w-4xl w-full max-h-[90vh] shadow-2xl relative border border-white/5"
               onClick={(e) => e.stopPropagation()}
             >
@@ -103,7 +106,7 @@ const PortfolioSection: React.FC = () => {
                 <X size={20} />
               </button>
               <div className="grid grid-cols-1 md:grid-cols-2">
-                <img src={selectedProject.imageUrl} className="h-64 md:h-full object-cover" />
+                <img src={selectedProject.imageUrl} alt={selectedProject.title} className="h-64 md:h-full object-cover" />
                 <div className="p-10 flex flex-col justify-center">
                   <span className="text-[#8a70c0] text-[8px] font-bold uppercase tracking-widest mb-3 block">{selectedProject.category}</span>
                   <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">{selectedProject.title}</h2>
